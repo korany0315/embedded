@@ -86,7 +86,7 @@ public class ChatClient extends JFrame implements Runnable {
 
 		try {
 
-			s = new Socket("192.168.3.22", 3500);
+			s = new Socket("192.168.3.101", 3500);
 
 			// 서버에서 넘어온 값을 읽어들이기 위한 input스트림
 			in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -102,8 +102,7 @@ public class ChatClient extends JFrame implements Runnable {
 
 	// 서버에 데이터를 전달하는 메서드
 	private void sendData() {
-		
-		
+
 		String msg = input.getText();
 		out.println(msg);
 		input.setText("");
@@ -113,13 +112,13 @@ public class ChatClient extends JFrame implements Runnable {
 	public void run() {
 
 		// 서버로 부터 전달되는 메세지를 기다린다
-		while (true) {
 
-			try {
+		try {
+			while (true) {
 
 				String msg = in.readLine();
 
-				if (msg.equals("xx:~xhjp")) {
+				if (msg.equals("xx:~X")) {
 					break;
 				}
 
@@ -127,23 +126,23 @@ public class ChatClient extends JFrame implements Runnable {
 					area.append(msg + "\n");
 				}
 
-			} catch (Exception e) {
-				// TODO: handle exception
-			} finally {
+			} // while
 
-				try {
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
 
-					out.close();
-					in.close();
-					s.close();
+			try {
 
-				} catch (Exception e2) {
+				out.close();
+				in.close();
+				s.close();
+				System.exit(0);
+			} catch (Exception e2) {
 
-				}
 			}
+		}
 
-		} // while
-
-	}
+	} // while
 
 }
